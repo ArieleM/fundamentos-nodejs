@@ -16,6 +16,9 @@ class CreateTransactionService {
 
   public execute({ title, value, type }: TransactionRequest): Transaction {
     // TODO
+    if (!['income', 'outcome'].includes(type)) {
+      throw new Error(' Não é um tipo de transação válida');
+    }
     const { total } = this.transactionsRepository.getBalance();
     if (type === 'outcome' && value > total) {
       throw new Error('Você não tem saldo suficiente');
